@@ -3,92 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classified Login Terminal</title>
+  <title>CONTROL ROOM - CLASSIFIED OPS</title>
   <style>
     body {
-      background-color: black;
-      color: lime;
-      font-family: monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: black;
+      color: #00ff00;
+      font-family: "Courier New", Courier, monospace;
+      padding: 2em;
+      overflow: hidden;
+    }
+    h1 {
+      text-align: center;
+      color: red;
+      text-shadow: 0 0 5px #ff0000;
+    }
+    .btn {
+      display: block;
+      margin: 1em auto;
+      padding: 1em 2em;
+      background: #111;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      font-size: 1.2em;
+      cursor: pointer;
       text-align: center;
     }
-    input {
+    .btn:hover {
+      background: #00ff00;
+      color: black;
+    }
+    .countdown {
+      text-align: center;
+      font-size: 2em;
+      color: red;
+      margin-top: 1em;
+    }
+    .map {
+      text-align: center;
+      margin-top: 2em;
+    }
+    .location {
+      color: #00ff00;
+      cursor: pointer;
+      display: block;
+      margin: 0.5em;
+    }
+    .terminal {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       background: black;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: lime;
-      border: 1px solid lime;
-      font-family: monospace;
-      padding: 10px;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-    #message, #countdown, #betrayal {
-      margin-top: 20px;
-      font-size: 1.2rem;
-    }
-    .blink {
-      animation: blink 1s step-start infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
+      font-size: 1.5em;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>CLASSIFIED ACCESS PORTAL</h1>
-  <p>Enter Access Password:</p>
-  <input type="password" id="passwordInput" placeholder="••••••">
-  <button onclick="checkPassword()">Login</button>
-  <p><em>Hint: Nuke Nuke and Nuke</em></p>
+  <h1>CLASSIFIED CONTROL ROOM</h1>
+  <button class="btn" onclick="initiateLaunch()">INITIATE LAUNCH</button>
+  <button class="btn" onclick="toggleMap()">CHECK STRIKE AREA</button>
+  <button class="btn" onclick="abortLaunch()">ABORT</button>
 
-  <div id="message"></div>
-  <div id="countdown"></div>
-  <div id="betrayal"></div>
+  <div class="countdown" id="countdown"></div>
 
-  <audio id="beep">
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-  </audio>
-  <audio id="longbeep">
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
-  </audio>
+  <div class="map" id="map" style="display:none">
+    <span class="location" onclick="strikeTarget()">Kabarak University</span>
+    <span class="location" onclick="strikeTarget()">Nairobi CBD</span>
+    <span class="location" onclick="strikeTarget()">United States</span>
+    <span class="location" onclick="strikeTarget()">China</span>
+    <span class="location" onclick="strikeTarget()">Australia</span>
+    <span class="location" onclick="strikeTarget()">Indonesia</span>
+    <span class="location" onclick="strikeTarget()">Japan</span>
+    <span class="location" onclick="strikeTarget()">Germany</span>
+  </div>
+
+  <div class="terminal" id="terminal">
+    <p id="terminalText"></p>
+  </div>
+
+  <audio id="nukeSound" src="https://www.soundjay.com/misc/sounds/nuclear-alarm-01.mp3"></audio>
 
   <script>
-    function checkPassword() {
-      const input = document.getElementById('passwordInput').value;
-      const message = document.getElementById('message');
-      const countdown = document.getElementById('countdown');
-      const betrayal = document.getElementById('betrayal');
+    let timer;
 
-      if (input === 'NukeEm') {
-        message.innerHTML = '<span class="blink">Access Granted. Safely Logged In.</span>';
-        setTimeout(() => {
-          window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-        }, 2000);
-      } else {
-        let timeLeft = 10;
-        message.innerHTML = '<span class="blink">Intrusion Detected... ABORT SEQUENCE INITIATED</span>';
-        const beep = document.getElementById('beep');
-        const longbeep = document.getElementById('longbeep');
+    function initiateLaunch() {
+      const sound = document.getElementById('nukeSound');
+      sound.play();
+      let countdown = 10;
+      const countdownElement = document.getElementById('countdown');
+      countdownElement.textContent = `LAUNCH INITIATED: ${countdown}`;
+      timer = setInterval(() => {
+        countdown--;
+        countdownElement.textContent = `LAUNCH INITIATED: ${countdown}`;
+        if (countdown === 0) {
+          clearInterval(timer);
+          window.location.href = "https://www.youtube.com/watch?v=Pq_XR3Rxd-Y";
+        }
+      }, 1000);
+    }
 
-        const countdownInterval = setInterval(() => {
-          beep.play();
-          countdown.innerText = `Self Destruct In: ${timeLeft} seconds`;
-          timeLeft--;
+    function abortLaunch() {
+      clearInterval(timer);
+      const countdownElement = document.getElementById('countdown');
+      countdownElement.innerHTML = '<span style="color: lime">*** LAUNCH ABORTED BY OPERATOR ***</span>';
+    }
 
-          if (timeLeft < 0) {
-            clearInterval(countdownInterval);
-            countdown.innerText = '';
-            betrayal.innerHTML = '<span class="blink">Betrayal Confirmed. Mission Compromised.</span>';
-            longbeep.play();
-            setTimeout(() => {
-              window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-            }, 4000);
-          }
-        }, 1000);
-      }
+    function toggleMap() {
+      const map = document.getElementById('map');
+      map.style.display = map.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function strikeTarget() {
+      const terminal = document.getElementById('terminal');
+      const terminalText = document.getElementById('terminalText');
+      terminal.style.display = 'flex';
+      terminalText.textContent = 'Sending coordinates... Locking target... Launching...';
+      setTimeout(() => {
+        window.location.href = "https://www.youtube.com/watch?v=Pq_XR3Rxd-Y";
+      }, 4000);
     }
   </script>
 </body>
