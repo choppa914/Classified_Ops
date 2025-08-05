@@ -1,108 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Classified Military Interface</title>
-    <style>
-        body {
-            background-color: #000;
-            color: #0f0;
-            font-family: "Courier New", monospace;
-            text-align: center;
-            padding-top: 100px;
-        }
-        #login-screen, #terminal, #countdown-section {
-            display: none;
-        }
-        .hidden {
-            display: none;
-        }
-        input, button {
-            background-color: #111;
-            color: #0f0;
-            border: 1px solid #0f0;
-            padding: 10px;
-            font-family: "Courier New", monospace;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classified Login Terminal</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    input {
+      background: black;
+      color: lime;
+      border: 1px solid lime;
+      font-family: monospace;
+      padding: 10px;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    #message, #countdown, #betrayal {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+    .blink {
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-    <div id="login-screen">
-        <h1>🔒 CLASSIFIED ACCESS ONLY</h1>
-        <p>Enter Clearance Code:</p>
-        <input type="password" id="code-input" placeholder="********"><br><br>
-        <button onclick="checkCode()">Access</button>
-    </div>
+  <h1>CLASSIFIED ACCESS PORTAL</h1>
+  <p>Enter Access Password:</p>
+  <input type="password" id="passwordInput" placeholder="••••••">
+  <button onclick="checkPassword()">Login</button>
+  <p><em>Hint: Nuke Nuke and Nuke</em></p>
 
-    <div id="terminal">
-        <p id="terminal-text">Initializing secure protocol...</p>
-    </div>
+  <div id="message"></div>
+  <div id="countdown"></div>
+  <div id="betrayal"></div>
 
-    <div id="countdown-section">
-        <h1>🚨 LAUNCH INITIATED 🚨</h1>
-        <p>Missile protocol will engage in: <span id="countdown">10</span> seconds</p>
-        <button onclick="rickroll()">Abort Mission</button>
-    </div>
+  <audio id="beep">
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+  </audio>
+  <audio id="longbeep">
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  </audio>
 
-    <audio id="alarm" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+  <script>
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const message = document.getElementById('message');
+      const countdown = document.getElementById('countdown');
+      const betrayal = document.getElementById('betrayal');
 
-    <script>
-        const loginScreen = document.getElementById("login-screen");
-        const terminal = document.getElementById("terminal");
-        const countdownSection = document.getElementById("countdown-section");
-        const countdown = document.getElementById("countdown");
-        const alarm = document.getElementById("alarm");
+      if (input === 'NukeEm') {
+        message.innerHTML = '<span class="blink">Access Granted. Safely Logged In.</span>';
+        setTimeout(() => {
+          window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+        }, 2000);
+      } else {
+        let timeLeft = 10;
+        message.innerHTML = '<span class="blink">Intrusion Detected... ABORT SEQUENCE INITIATED</span>';
+        const beep = document.getElementById('beep');
+        const longbeep = document.getElementById('longbeep');
 
-        function checkCode() {
-            loginScreen.style.display = "none";
-            terminal.style.display = "block";
-            bootSequence();
-        }
+        const countdownInterval = setInterval(() => {
+          beep.play();
+          countdown.innerText = `Self Destruct In: ${timeLeft} seconds`;
+          timeLeft--;
 
-        function bootSequence() {
-            const lines = [
-                "Verifying access...",
-                "Connecting to DoD mainframe...",
-                "Access level: ULTRA BLACK",
-                "Loading launch protocols...",
-                "Armament system online.",
-                "Engage sequence ready."
-            ];
-            let i = 0;
-            const text = document.getElementById("terminal-text");
-            const interval = setInterval(() => {
-                if (i < lines.length) {
-                    text.innerText = lines[i];
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    terminal.style.display = "none";
-                    startCountdown();
-                }
-            }, 1000);
-        }
-
-        function startCountdown() {
-            countdownSection.style.display = "block";
-            alarm.play();
-            let timeLeft = 10;
-            const timer = setInterval(() => {
-                timeLeft--;
-                countdown.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    rickroll();
-                }
-            }, 1000);
-        }
-
-        function rickroll() {
-            window.location.href = "https://youtu.be/dQw4w9WgXcQ";
-        }
-
-        // Show login on load
-        loginScreen.style.display = "block";
-    </script>
+          if (timeLeft < 0) {
+            clearInterval(countdownInterval);
+            countdown.innerText = '';
+            betrayal.innerHTML = '<span class="blink">Betrayal Confirmed. Mission Compromised.</span>';
+            longbeep.play();
+            setTimeout(() => {
+              window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+            }, 4000);
+          }
+        }, 1000);
+      }
+    }
+  </script>
 </body>
 </html>
