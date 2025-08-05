@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ACCESS DENIED</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+    #countdown {
+      font-size: 3em;
+      margin-top: 20px;
+      color: white;
+    }
+    #message {
+      margin-top: 20px;
+      color: orange;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>❌ UNAUTHORIZED ACCESS DETECTED ❌</h1>
+  <div id="message">Initiating Betrayal Sequence...</div>
+  <div id="countdown">10</div>
+  <audio id="beep" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    let timeLeft = 10;
+    const countdown = document.getElementById("countdown");
+    const message = document.getElementById("message");
+    const beep = document.getElementById("beep");
+
+    const interval = setInterval(() => {
+      beep.play();
+      timeLeft--;
+      countdown.textContent = timeLeft;
+
+      if (timeLeft === 5) {
+        message.textContent = "Abort Sequence Failed...";
+      }
+
+      if (timeLeft === 2) {
+        message.textContent = "You were never one of us.";
+      }
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Rickroll
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
