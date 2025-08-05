@@ -1,0 +1,44 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classified Access</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap">
+  <style>
+    body {
+      background-color: black;
+      color: #00FF41;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #111;
+      color: #00FF41;
+      border: 1px solid #00FF41;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔒 Enter Launch Authorization</h1>
+  <p>Hint: Nuke Nuke and Nuke</p>
+  <input type="password" id="password" placeholder="Enter Password" />
+  <br />
+  <button onclick="checkPassword()">Enter</button>
+  <script src="login.js"></script>
+</body>
+</html>
