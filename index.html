@@ -1,56 +1,108 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Department of Strategic Operations</title>
-  <style>
-    body {
-      background-color: black;
-      color: #00FF00;
-      font-family: "Courier New", monospace;
-      padding: 20px;
-    }
-    h1 {
-      color: red;
-      text-align: center;
-    }
-    .warning {
-      background-color: red;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .intel {
-      border: 2px dashed green;
-      padding: 20px;
-    }
-    .link {
-      margin-top: 20px;
-      text-align: center;
-    }
-    a {
-      color: cyan;
-      font-size: 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Classified Military Interface</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: "Courier New", monospace;
+            text-align: center;
+            padding-top: 100px;
+        }
+        #login-screen, #terminal, #countdown-section {
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+        input, button {
+            background-color: #111;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+        }
+    </style>
 </head>
 <body>
-  <div class="warning">⚠️ CLASSIFIED ACCESS ONLY ⚠️</div>
-  <h1>NUCLEAR OPERATIONS DIVISION</h1>
-  <div class="intel">
-    <p><strong>Status:</strong> HIGH ALERT</p>
-    <p><strong>Protocol:</strong> ZETA-ALPHA BLACK</p>
-    <p><strong>Clearance Required:</strong> Level 9+</p>
-    <p><strong>Report:</strong> Potential foreign breach detected in communications grid. Agent Scrim (ID #009-kitten) flagged irregular uplink from civilian hotspot labeled “Mobile Detonation Unit”.</p>
-    <p><strong>Instructions:</strong> Proceed to secure access link for threat verification...</p>
-  </div>
-  <div class="link">
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
-      Access Classified Ops Terminal →
-    </a>
-  </div>
+    <div id="login-screen">
+        <h1>🔒 CLASSIFIED ACCESS ONLY</h1>
+        <p>Enter Clearance Code:</p>
+        <input type="password" id="code-input" placeholder="********"><br><br>
+        <button onclick="checkCode()">Access</button>
+    </div>
+
+    <div id="terminal">
+        <p id="terminal-text">Initializing secure protocol...</p>
+    </div>
+
+    <div id="countdown-section">
+        <h1>🚨 LAUNCH INITIATED 🚨</h1>
+        <p>Missile protocol will engage in: <span id="countdown">10</span> seconds</p>
+        <button onclick="rickroll()">Abort Mission</button>
+    </div>
+
+    <audio id="alarm" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+    <script>
+        const loginScreen = document.getElementById("login-screen");
+        const terminal = document.getElementById("terminal");
+        const countdownSection = document.getElementById("countdown-section");
+        const countdown = document.getElementById("countdown");
+        const alarm = document.getElementById("alarm");
+
+        function checkCode() {
+            loginScreen.style.display = "none";
+            terminal.style.display = "block";
+            bootSequence();
+        }
+
+        function bootSequence() {
+            const lines = [
+                "Verifying access...",
+                "Connecting to DoD mainframe...",
+                "Access level: ULTRA BLACK",
+                "Loading launch protocols...",
+                "Armament system online.",
+                "Engage sequence ready."
+            ];
+            let i = 0;
+            const text = document.getElementById("terminal-text");
+            const interval = setInterval(() => {
+                if (i < lines.length) {
+                    text.innerText = lines[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    terminal.style.display = "none";
+                    startCountdown();
+                }
+            }, 1000);
+        }
+
+        function startCountdown() {
+            countdownSection.style.display = "block";
+            alarm.play();
+            let timeLeft = 10;
+            const timer = setInterval(() => {
+                timeLeft--;
+                countdown.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    rickroll();
+                }
+            }, 1000);
+        }
+
+        function rickroll() {
+            window.location.href = "https://youtu.be/dQw4w9WgXcQ";
+        }
+
+        // Show login on load
+        loginScreen.style.display = "block";
+    </script>
 </body>
 </html>
