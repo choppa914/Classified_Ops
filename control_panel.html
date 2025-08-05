@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Control Panel</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 40px;
+    }
+    button {
+      font-size: 1.2em;
+      margin: 15px;
+      padding: 15px 30px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #222;
+      color: lime;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: lime;
+      color: black;
+    }
+    #countdown {
+      font-size: 2em;
+      margin-top: 30px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>NUCLEAR CONTROL PANEL</h1>
+
+  <button onclick="initiateLaunch()">🚀 Initiate Launch</button>
+  <button onclick="checkStrikeArea()">📍 Check Strike Area</button>
+  <button onclick="abort()">❌ Abort</button>
+
+  <div id="countdown"></div>
+
+  <audio id="nukeSound" src="https://www.myinstants.com/media/sounds/nuke-sound.mp3"></audio>
+
+  <script>
+    function initiateLaunch() {
+      const countdownDisplay = document.getElementById("countdown");
+      const nukeSound = document.getElementById("nukeSound");
+      let timeLeft = 10;
+
+      countdownDisplay.style.display = "block";
+      countdownDisplay.textContent = `LAUNCHING IN: ${timeLeft}...`;
+      nukeSound.play();
+
+      const countdown = setInterval(() => {
+        timeLeft--;
+        countdownDisplay.textContent = `LAUNCHING IN: ${timeLeft}...`;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          window.location.href = "https://www.youtube.com/watch?v=Pq_XR3Rxd-Y"; // COD Remastered Nuke
+        }
+      }, 1000);
+    }
+
+    function checkStrikeArea() {
+      const locations = [
+        "🇺🇸 United States",
+        "🇰🇪 Kabarak",
+        "🇰🇪 Nairobi",
+        "🇨🇳 China",
+        "🇦🇺 Australia",
+        "🇯🇵 Japan",
+        "🇩🇪 Germany",
+        "🇮🇩 Indonesia"
+      ];
+      const selected = locations[Math.floor(Math.random() * locations.length)];
+      alert("Target Locked: " + selected);
+      window.location.href = "https://www.youtube.com/watch?v=Pq_XR3Rxd-Y";
+    }
+
+    function abort() {
+      alert("⛔ ABORTED! Launch sequence terminated.");
+    }
+  </script>
+
+</body>
+</html>
