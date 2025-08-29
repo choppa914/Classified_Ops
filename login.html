@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Classified Ops Login</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    input {
+      background: black;
+      border: 1px solid lime;
+      color: lime;
+      padding: 8px;
+      margin: 5px;
+    }
+    button {
+      background: lime;
+      color: black;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .hint {
+      margin-top: 20px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔒 Classified Access Only</h1>
+  <p>Enter Password:</p>
+  <input type="password" id="password">
+  <button onclick="checkPassword()">Enter</button>
+  <p class="hint">Hint: Nuke Nuke and Nuke</p>
+
+  <script src="login.js"></script>
+</body>
+</html>
