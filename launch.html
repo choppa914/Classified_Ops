@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Launch Sequence</title>
+  <style>
+    body { font-family: monospace; background:black; color:lime; text-align:center; }
+    #countdown { font-size:48px; margin:20px; }
+    button { padding:10px 20px; margin:20px; font-size:18px; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Launch Sequence Initiated</h1>
+  <p>Target: <span id="target"></span></p>
+  <p id="countdown">10</p>
+  <button onclick="abort()">ABORT</button>
+
+  <audio id="alarm" autoplay loop>
+    <source src="https://www.myinstants.com/media/sounds/nuclear_alarm.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    document.getElementById("target").innerText = localStorage.getItem("target");
+    let timeLeft = 10;
+    const countdown = document.getElementById("countdown");
+    const timer = setInterval(() => {
+      timeLeft--;
+      countdown.innerText = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        window.location.href = "https://www.youtube.com/watch?v=Pq_XR3Rxd-Y"; // COD nuke
+      }
+    }, 1000);
+
+    function abort() {
+      clearInterval(timer);
+      window.location.href = "abort.html";
+    }
+  </script>
+</body>
+</html>
