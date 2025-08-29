@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Control Panel</title>
+  <style>
+    body { font-family: monospace; background:black; color:lime; text-align:center; }
+    button { display:block; margin:10px auto; padding:10px 20px; font-size:18px; }
+  </style>
+</head>
+<body>
+  <h1>⚠️ Nuclear Control Panel ⚠️</h1>
+  <p>Select Strike Location:</p>
+  <button onclick="launch('United States')">United States</button>
+  <button onclick="launch('China')">China</button>
+  <button onclick="launch('Australia')">Australia</button>
+  <button onclick="launch('Indonesia')">Indonesia</button>
+  <button onclick="launch('Japan')">Japan</button>
+  <button onclick="launch('Germany')">Germany</button>
+  <button onclick="launch('Kenya - Nairobi')">Kenya - Nairobi</button>
+  <button onclick="launch('Kenya - Kabarak')">Kenya - Kabarak</button>
+
+  <script>
+    function launch(target) {
+      localStorage.setItem("target", target);
+      window.location.href = "launch.html";
+    }
+  </script>
+</body>
+</html>
