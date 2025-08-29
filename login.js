@@ -6,6 +6,6 @@ function checkPassword() {
     window.location.href = "control_panel.html";
   } else {
     // ❌ wrong password
-    window.location.href = "rickroll_wrong.html";
+    window.location.href = "rickroll.html";
   }
 }
